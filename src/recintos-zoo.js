@@ -75,22 +75,17 @@ class RecintosZoo {
           animalInfo.biomas.some((bioma) => recinto.bioma.includes(bioma)) &&
           espacoLivre >= animalInfo.tamanho * quantidade
         ) {
-          // Se for carnívoro, verificar se já existem carnívoros diferentes
+          // Verificar se já existem carnívoros diferentes
           if (animalInfo.carnivoro || especieExistente.carnivoro) {
-            return; // Não pode adicionar carnívoros diferentes no mesmo recinto
+            return;
           }
 
-          // Regras específicas para macacos
-          if (animalInfo.nome === "MACACO" && qntdExistente === 0) {
-            return; // Macaco precisa de pelo menos outro animal no recinto
-          }
-
-          // Regras específicas para hipopótamos
+          // Regras para hipopótamos
           if (
-            animalInfo.nome === "HIPOPOTAMO" &&
+            animal === "HIPOPOTAMO" &&
             !(recinto.bioma.includes("savana") && recinto.bioma.includes("rio"))
           ) {
-            return; // Hipopótamo só tolera outras espécies no bioma 'savana e rio'
+            return;
           }
 
           // Se há espécies diferentes, adicionar espaço extra
@@ -105,8 +100,13 @@ class RecintosZoo {
             );
           }
         }
+      // Se não houver animais existentes
       } else {
-        // Se não houver animais existentes
+        // Macacos não podem ficar sozinhos
+        if (animal === "MACACO" && quantidade <= 1) {
+          return; // Macaco precisa de pelo menos outro animal no recinto
+        }
+
         if (
           animalInfo.biomas.some((bioma) => recinto.bioma.includes(bioma)) &&
           espacoLivre >= animalInfo.tamanho * quantidade
@@ -129,3 +129,5 @@ class RecintosZoo {
 }
 
 export { RecintosZoo as RecintosZoo };
+const zoo = new RecintosZoo();
+console.log(zoo.analisaRecintos("HIPOPOTAMO", 1)); // Caso válido
