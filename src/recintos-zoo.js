@@ -100,14 +100,12 @@ class RecintosZoo {
             );
           }
         }
-      // Se não houver animais existentes
+        // Se não houver animais existentes
       } else {
         // Macacos não podem ficar sozinhos
         if (animal === "MACACO" && quantidade <= 1) {
           return; // Macaco precisa de pelo menos outro animal no recinto
-        }
-
-        if (
+        } else if (
           animalInfo.biomas.some((bioma) => recinto.bioma.includes(bioma)) &&
           espacoLivre >= animalInfo.tamanho * quantidade
         ) {
@@ -129,5 +127,3 @@ class RecintosZoo {
 }
 
 export { RecintosZoo as RecintosZoo };
-const zoo = new RecintosZoo();
-console.log(zoo.analisaRecintos("HIPOPOTAMO", 1)); // Caso válido
